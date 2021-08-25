@@ -19,3 +19,4 @@ cashier_core/.idea/*
 .settings
 bin/
 gen/
+out/

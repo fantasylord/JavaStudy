@@ -50,9 +50,9 @@ public class BinaryTreeLevelVectorTypeForZ {
 
     }
     /**
-     * 8
-     * 6  10
-     * 5 7 9  11
+     *      8
+     *   6    10
+     * 5  7  9  11
      *
      * @param args
      */

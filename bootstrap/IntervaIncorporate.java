@@ -34,14 +34,14 @@ public class IntervaIncorporate {
     public static int[][] valscombine(int[][] vals) {
 
         int[] flags = new int[vals.length];
-        int[][] result = new int[vals.length][2];
-
+        int[][] incorporated = new int[vals.length][2];
+        int length = vals.length;
         for (int i = 0; i < vals.length; i++) {
             if (flags[i] == 1) {
                 continue;
             }
-            result[i][0] = vals[i][0];
-            result[i][1] = vals[i][1];
+            incorporated[i][0] = vals[i][0];
+            incorporated[i][1] = vals[i][1];
 
             for (int j = i + 1; j < vals.length; j++) {
 
@@ -53,9 +53,10 @@ public class IntervaIncorporate {
 
                 //   j0     j1
                 // i0           i1
-                if (result[i][0] <= vals[j][0] && vals[j][0] <= result[i][1]) {
-                    result[i][1] = Math.max(result[i][1], vals[j][1]);
+                if (incorporated[i][0] <= vals[j][0] && vals[j][0] <= incorporated[i][1]) {
+                    incorporated[i][1] = Math.max(incorporated[i][1], vals[j][1]);
                     flags[j] = 1;
+                    length--;
                     continue;
                 }
                 //2.  j1在i区间内
@@ -66,9 +67,10 @@ public class IntervaIncorporate {
 
                 //    j0       j1
                 // i0               i1
-                if (result[i][0] <= vals[j][1] && vals[j][1] <= result[i][1]) {
-                    result[i][0] = Math.min(result[i][0], vals[j][0]);
+                if (incorporated[i][0] <= vals[j][1] && vals[j][1] <= incorporated[i][1]) {
+                    incorporated[i][0] = Math.min(incorporated[i][0], vals[j][0]);
                     flags[j] = 1;
+                    length--;
                     continue;
                 }
                 //3. i0在j区间内
@@ -79,10 +81,11 @@ public class IntervaIncorporate {
 
                 //    j0       j1
                 //       i0 i1
-                if (vals[j][0] <= result[i][0] && result[i][0] <= vals[j][1]) {
-                    result[i][0] = vals[j][0];
-                    result[i][1] = Math.max(result[i][1], vals[j][1]);
+                if (vals[j][0] <= incorporated[i][0] && incorporated[i][0] <= vals[j][1]) {
+                    incorporated[i][0] = vals[j][0];
+                    incorporated[i][1] = Math.max(incorporated[i][1], vals[j][1]);
                     flags[j] = 1;
+                    length--;
                     continue;
 
                 }
@@ -95,10 +98,11 @@ public class IntervaIncorporate {
 
                 //     j0       j1
                 //       i0   i1
-                if (result[j][0] <= vals[i][1] && vals[i][1] <= result[j][1]) {
-                    result[i][1] = vals[j][1];
-                    result[i][0] = Math.min(result[i][0], vals[j][0]);
+                if (incorporated[j][0] <= vals[i][1] && vals[i][1] <= incorporated[j][1]) {
+                    incorporated[i][1] = vals[j][1];
+                    incorporated[i][0] = Math.min(incorporated[i][0], vals[j][0]);
                     flags[j] = 1;
+                    length--;
                     continue;
 
                 }
@@ -106,18 +110,28 @@ public class IntervaIncorporate {
             }
         }
 
+        int[][] result = new int[length][2];
+        int temp = 0;
+        for (int[] itemarr : incorporated) {
+            if (itemarr[0] == 0 && itemarr[1] == 0) {
+                continue;
+            }
+            result[temp][0] = itemarr[0];
+            result[temp][1] = itemarr[1];
+            temp++;
+        }
         return result;
+
 
     }
 
+
     public static void main(String[] args) throws Exception {
 
-        int[][] vals = new int[][]{{11,12},{1, 3},{13,24}, {2, 6}, {8, 10}, {15, 18}};
+        int[][] vals = new int[][]{{11, 12}, {1, 3}, {13, 24}, {2, 6}, {8, 10}, {15, 18}};
         int[][] valscombine = valscombine(vals);
         for (int[] item : valscombine) {
-            if (item[0] == 0 && item[1] == 0) {
-                continue;
-            }
+
             System.out.println("[" + item[0] + "," + item[1] + "]");
         }
         System.in.read();

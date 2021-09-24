@@ -140,7 +140,7 @@ public class LIS {
      * 一个集合maxlength存放每个元素下标位置对应的：arr[0]到当前位置的最长子串
      * 与动态规划不同处：
      * 这里额外开辟一个集合arraySortVal去完成贪心算法的核心思想[局部最优解->全局最优解]：
-     * 思想：
+     * 解题推导
      * 1.局部最优解： 从局部数据开始分析：假设arr只有 1 4 3 2 3
      * 首先maxVal=1，maxlength=[1],maxIndex=0,arraySortVal=[1];
      * 2.从第二个元素开始遍历：i=2
